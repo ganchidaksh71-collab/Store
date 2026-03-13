@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Itz Ghanta Gram Store</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f6f6f6;
+}
+
+header{
+background:black;
+color:white;
+padding:16px;
+text-align:center;
+font-size:22px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:20px;
+}
+
+.card{
+background:white;
+border-radius:10px;
+padding:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.price{
+font-weight:bold;
+margin:10px 0;
+}
+
+button{
+padding:10px;
+width:100%;
+border:none;
+background:black;
+color:white;
+border-radius:6px;
+margin-top:8px;
+}
+
+.cart{
+position:fixed;
+bottom:20px;
+right:20px;
+background:black;
+color:white;
+padding:15px;
+border-radius:50px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+Itz Ghanta Gram Store
+</header>
+
+<div class="grid" id="products"></div>
+
+<div class="cart">
+Cart (<span id="count">0</span>)
+</div>
+
+<script>
+
+const phone="918949803348"
+
+const products=[
+
+{
+name:"Mosquito Killer Lamp",
+price:339,
+img:"https://i.ibb.co/6Js3y1XY/IMG-20260313-232907.jpg"
+},
+
+{
+name:"Mini Portable Fan",
+price:299,
+img:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b"
+}
+
+]
+
+let cart=[]
+
+const container=document.getElementById("products")
+
+products.forEach((p,i)=>{
+
+let card=document.createElement("div")
+
+card.className="card"
+
+card.innerHTML=`
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<div class="price">₹${p.price}</div>
+
+<button onclick="add(${i})">Add to Cart</button>
+
+<a href="upi://pay?pa=ganchidaksh71@okicici&pn=ItzGhantaGram&am=${p.price}&cu=INR">
+
+<button>Pay Now</button>
+
+</a>
+`
+
+container.appendChild(card)
+
+})
+
+function add(i){
+
+cart.push(products[i])
+
+document.getElementById("count").innerText=cart.length
+
+}
+
+function order(){
+
+let items=cart.map(p=>p.name).join(",")
+
+let msg="Order:%0A"+items
+
+window.open("https://wa.me/"+phone+"?text="+msg)
+
+}
+
+</script>
+
+<button onclick="order()" style="position:fixed;bottom:80px;right:20px;padding:15px">
+Order on WhatsApp
+</button>
+
+</body>
+  </html>
