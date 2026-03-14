@@ -118,9 +118,7 @@ Cart (<span id="count">0</span>)
 <h3>Customer Details</h3>
 
 <input id="name" placeholder="Full Name">
-
 <input id="phone" placeholder="Phone Number">
-
 <textarea id="address" placeholder="Delivery Address"></textarea>
 
 <button onclick="checkout()">Proceed to Payment</button>
@@ -138,19 +136,19 @@ const products=[
 {
 name:"Mosquito Killer Lamp",
 price:309,
-img:"https://m.media-amazon.com/images/I/61S5kzZ4+QL._AC_SL1500_.jpg"
+img:"https://i.ibb.co/JjptNNJL/Screenshot-2026-03-14-00-44-35-32-fd1e8ef594b195c55a3bba4818d0ce35.jpg"
 },
 
 {
 name:"Mini Portable Fan",
 price:299,
-img:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b"
+img:"https://i.ibb.co/d3Wgq0b/IMG-20260314-124054.jpg"
 },
 
 {
 name:"Catnip Toy",
 price:250,
-img:"https://images.unsplash.com/photo-1601758123927-1963c48d2d6c"
+img:"https://i.ibb.co/C5523qvz/61-YAHjgvfw-L-AC-SL1000.jpg"
 }
 
 ]
@@ -231,25 +229,4 @@ let total=cart.reduce((sum,p)=>sum+p.price,0)
 
 let msg=
 "New Order%0A%0A"+
-"Products:%0A"+items+
-"%0A%0ATotal: ₹"+total+
-"%0A%0AName: "+name+
-"%0APhone: "+phone+
-"%0AAddress: "+address
-
-let upiLink=`upi://pay?pa=${upi}&pn=GhantaGram&am=${total}&cu=INR`
-
-window.open(upiLink)
-
-setTimeout(()=>{
-
-window.open("https://wa.me/"+ownerPhone+"?text="+msg)
-
-},4000)
-
-}
-
-</script>
-
-</body>
-  </html>
+"Products
