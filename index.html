@@ -123,13 +123,7 @@ Cart (<span id="count">0</span>)
 
 <textarea id="address" placeholder="Delivery Address"></textarea>
 
-<button onclick="checkout()">Proceed</button>
-
-<a id="payBtn" style="display:none">
-<button>Pay Now</button>
-</a>
-
-<button onclick="sendOrder()">Send Order on WhatsApp</button>
+<button onclick="checkout()">Proceed to Payment</button>
 
 </div>
 
@@ -144,19 +138,19 @@ const products=[
 {
 name:"Mosquito Killer Lamp",
 price:309,
-img:"https://i.ibb.co/JjptNNJL/Screenshot-2026-03-14-00-44-35-32-fd1e8ef594b195c55a3bba4818d0ce35.jpg"
+img:"https://m.media-amazon.com/images/I/61S5kzZ4+QL._AC_SL1500_.jpg"
 },
 
 {
 name:"Mini Portable Fan",
 price:299,
-img:"https://i.ibb.co/d3Wgq0b/IMG-20260314-124054.jpg"
+img:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b"
 },
 
 {
 name:"Catnip Toy",
 price:250,
-img:"https://i.ibb.co/C5523qvz/61-YAHjgvfw-L-AC-SL1000.jpg"
+img:"https://images.unsplash.com/photo-1601758123927-1963c48d2d6c"
 }
 
 ]
@@ -231,24 +225,6 @@ return
 
 }
 
-let total=cart.reduce((sum,p)=>sum+p.price,0)
-
-let upiLink=`upi://pay?pa=${upi}&pn=GhantaGram&am=${total}&cu=INR`
-
-let payBtn=document.getElementById("payBtn")
-
-payBtn.href=upiLink
-
-payBtn.style.display="block"
-
-}
-
-function sendOrder(){
-
-let name=document.getElementById("name").value
-let phone=document.getElementById("phone").value
-let address=document.getElementById("address").value
-
 let items=cart.map(p=>p.name+" - ₹"+p.price).join("%0A")
 
 let total=cart.reduce((sum,p)=>sum+p.price,0)
@@ -261,7 +237,15 @@ let msg=
 "%0APhone: "+phone+
 "%0AAddress: "+address
 
+let upiLink=`upi://pay?pa=${upi}&pn=GhantaGram&am=${total}&cu=INR`
+
+window.open(upiLink)
+
+setTimeout(()=>{
+
 window.open("https://wa.me/"+ownerPhone+"?text="+msg)
+
+},4000)
 
 }
 
