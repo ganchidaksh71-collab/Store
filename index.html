@@ -128,105 +128,115 @@ Cart (<span id="count">0</span>)
 <script>
 
 const ownerPhone="918949803348"
-
 const upi="ganchidaksh71@okicici"
 
 const products=[
-
 {
 name:"Mosquito Killer Lamp",
 price:309,
 img:"https://i.ibb.co/JjptNNJL/Screenshot-2026-03-14-00-44-35-32-fd1e8ef594b195c55a3bba4818d0ce35.jpg"
 },
-
 {
 name:"Mini Portable Fan",
 price:299,
 img:"https://i.ibb.co/d3Wgq0b/IMG-20260314-124054.jpg"
 },
-
 {
 name:"Catnip Toy",
 price:250,
 img:"https://i.ibb.co/C5523qvz/61-YAHjgvfw-L-AC-SL1000.jpg"
 }
+];
 
-]
+let cart=[];
 
-let cart=[]
-
-const grid=document.getElementById("products")
+const grid=document.getElementById("products");
 
 products.forEach((p,i)=>{
 
-let card=document.createElement("div")
+let card=document.createElement("div");
 
-card.className="card"
+card.className="card";
 
-card.innerHTML=`
+card.innerHTML=
+"<img src='"+p.img+"'>"+
+"<h3>"+p.name+"</h3>"+
+"<div class='price'>₹"+p.price+"</div>"+
+"<button onclick='add("+i+")'>Add to Cart</button>";
 
-<img src="${p.img}">
+grid.appendChild(card);
 
-<h3>${p.name}</h3>
-
-<div class="price">₹${p.price}</div>
-
-<button onclick="add(${i})">Add to Cart</button>
-
-`
-
-grid.appendChild(card)
-
-})
+});
 
 function add(i){
 
-cart.push(products[i])
+cart.push(products[i]);
 
-document.getElementById("count").innerText=cart.length
+document.getElementById("count").innerText=cart.length;
 
-updateCart()
+updateCart();
 
 }
 
 function updateCart(){
 
-let items=document.getElementById("cartItems")
+let items=document.getElementById("cartItems");
 
-items.innerHTML=""
+items.innerHTML="";
 
 cart.forEach(p=>{
 
-items.innerHTML+=`<p>${p.name} - ₹${p.price}</p>`
+items.innerHTML+="<p>"+p.name+" - ₹"+p.price+"</p>";
 
-})
+});
 
 }
 
 function toggleCart(){
 
-document.getElementById("cart").classList.toggle("open")
+document.getElementById("cart").classList.toggle("open");
 
 }
 
 function checkout(){
 
-let name=document.getElementById("name").value
-let phone=document.getElementById("phone").value
-let address=document.getElementById("address").value
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let address=document.getElementById("address").value;
 
 if(!name||!phone||!address){
 
-alert("Please fill all details")
+alert("Please fill all details");
 
-return
+return;
 
 }
 
-let items=cart.map(p=>p.name+" - ₹"+p.price).join("%0A")
+let items=cart.map(p=>p.name+" - ₹"+p.price).join("%0A");
 
-let total=cart.reduce((sum,p)=>sum+p.price,0)
+let total=cart.reduce((sum,p)=>sum+p.price,0);
 
 let msg=
 "New Order%0A%0A"+
-"Products
+"Products:%0A"+items+
+"%0A%0ATotal: ₹"+total+
+"%0A%0AName: "+name+
+"%0APhone: "+phone+
+"%0AAddress: "+address;
+
+let upiLink="upi://pay?pa="+upi+"&pn=GhantaGram&am="+total+"&cu=INR";
+
+window.open(upiLink);
+
+setTimeout(function(){
+
+window.open("https://wa.me/"+ownerPhone+"?text="+msg);
+
+},4000);
+
+}
+
+</script>
+
+</body>
+  </html>
