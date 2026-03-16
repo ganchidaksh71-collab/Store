@@ -22,6 +22,35 @@ text-align:center;
 font-size:22px;
 }
 
+.hero{
+background:#ff9900;
+padding:50px;
+text-align:center;
+}
+
+.hero h1{
+margin:0;
+font-size:32px;
+}
+
+.hero p{
+margin-top:10px;
+}
+
+.hero button{
+margin-top:20px;
+padding:12px 25px;
+border:none;
+background:black;
+color:white;
+border-radius:6px;
+}
+
+.timer{
+margin-top:15px;
+font-weight:bold;
+}
+
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -93,6 +122,25 @@ border:1px solid #ccc;
 border-radius:6px;
 }
 
+.reviews{
+background:white;
+padding:20px;
+margin:20px;
+border-radius:10px;
+}
+
+.review{
+border-bottom:1px solid #eee;
+padding:10px 0;
+}
+
+footer{
+background:#131921;
+color:white;
+text-align:center;
+padding:20px;
+}
+
 </style>
 
 </head>
@@ -103,7 +151,31 @@ border-radius:6px;
 Itz Ghanta Gram Store
 </header>
 
-<div class="grid" id="products"></div>
+<div class="hero">
+
+<h1>🔥 Trending Gadgets Sale</h1>
+
+<p>Special Offer For Instagram Followers</p>
+
+<div class="timer" id="timer">Offer ends in: 10:00</div>
+
+<button onclick="scrollToProducts()">Shop Now</button>
+
+</div>
+
+<div id="products" class="grid"></div>
+
+<div class="reviews">
+
+<h2>Customer Reviews ⭐⭐⭐⭐⭐</h2>
+
+<div class="review">Rahul: Amazing product! Fast delivery.</div>
+
+<div class="review">Sneha: Quality is very good for the price.</div>
+
+<div class="review">Aman: Ordered again for my friend.</div>
+
+</div>
 
 <div class="cartBtn" onclick="toggleCart()">
 Cart (<span id="count">0</span>)
@@ -118,12 +190,21 @@ Cart (<span id="count">0</span>)
 <h3>Customer Details</h3>
 
 <input id="name" placeholder="Full Name">
+
 <input id="phone" placeholder="Phone Number">
+
 <textarea id="address" placeholder="Delivery Address"></textarea>
 
 <button onclick="checkout()">Proceed to Payment</button>
 
 </div>
+
+<footer>
+
+© 2026 Itz Ghanta Gram Store  
+Follow on Instagram @itz_ghanta_gram01
+
+</footer>
 
 <script>
 
@@ -131,21 +212,25 @@ const ownerPhone="918949803348"
 const upi="ganchidaksh71@okicici"
 
 const products=[
+
 {
 name:"Mosquito Killer Lamp",
 price:309,
 img:"https://i.ibb.co/JjptNNJL/Screenshot-2026-03-14-00-44-35-32-fd1e8ef594b195c55a3bba4818d0ce35.jpg"
 },
+
 {
 name:"Mini Portable Fan",
 price:299,
 img:"https://i.ibb.co/d3Wgq0b/IMG-20260314-124054.jpg"
 },
+
 {
 name:"Catnip Toy",
 price:250,
 img:"https://i.ibb.co/C5523qvz/61-YAHjgvfw-L-AC-SL1000.jpg"
 }
+
 ];
 
 let cart=[];
@@ -198,6 +283,12 @@ document.getElementById("cart").classList.toggle("open");
 
 }
 
+function scrollToProducts(){
+
+document.getElementById("products").scrollIntoView({behavior:"smooth"});
+
+}
+
 function checkout(){
 
 let name=document.getElementById("name").value;
@@ -235,6 +326,20 @@ window.open("https://wa.me/"+ownerPhone+"?text="+msg);
 },4000);
 
 }
+
+let time=600;
+
+setInterval(function(){
+
+time--;
+
+let min=Math.floor(time/60);
+
+let sec=time%60;
+
+document.getElementById("timer").innerText="Offer ends in: "+min+":"+sec;
+
+},1000);
 
 </script>
 
