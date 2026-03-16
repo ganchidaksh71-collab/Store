@@ -3,57 +3,27 @@
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Itz Ghanta Gram Store</title>
 
 <style>
 
-body{font-family:Arial;margin:0;background:#f5f5f5;}
+body{font-family:Arial;margin:0;background:#f5f5f5}
 
-header{
-background:#131921;
-color:white;
-padding:15px;
-text-align:center;
-font-size:22px;
-}
+header{background:#131921;color:white;padding:15px;text-align:center;font-size:22px}
 
-/* SEARCH */
+.searchBox{background:white;padding:15px;text-align:center}
 
-.searchBox{
-background:white;
-padding:15px;
-text-align:center;
-}
+.searchBox input{width:90%;max-width:400px;padding:10px;border-radius:6px;border:1px solid #ccc}
 
-.searchBox input{
-width:90%;
-max-width:400px;
-padding:10px;
-border-radius:6px;
-border:1px solid #ccc;
-}
+.hero{background:#ff9900;padding:40px;text-align:center}
 
-/* HERO */
-
-.hero{
-background:#ff9900;
-padding:50px;
-text-align:center;
-}
-
-.timer{
-margin-top:10px;
-font-weight:bold;
-}
-
-/* PRODUCTS */
+.timer{margin-top:10px;font-weight:bold}
 
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:20px;
-padding:20px;
+padding:20px
 }
 
 .card{
@@ -61,20 +31,17 @@ background:white;
 padding:15px;
 border-radius:10px;
 text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+box-shadow:0 5px 15px rgba(0,0,0,0.1)
 }
 
 .card img{
 width:100%;
 height:180px;
 object-fit:cover;
-border-radius:8px;
+border-radius:8px
 }
 
-.price{
-font-weight:bold;
-margin:10px 0;
-}
+.price{font-weight:bold;margin:10px 0}
 
 button{
 padding:10px;
@@ -82,10 +49,8 @@ border:none;
 background:#ff9900;
 border-radius:6px;
 width:100%;
-margin-top:8px;
+margin-top:8px
 }
-
-/* CART */
 
 .cartBtn{
 position:fixed;
@@ -94,7 +59,7 @@ right:20px;
 background:black;
 color:white;
 padding:15px;
-border-radius:50px;
+border-radius:50px
 }
 
 .cart{
@@ -107,23 +72,20 @@ background:white;
 padding:20px;
 box-shadow:-5px 0 20px rgba(0,0,0,0.2);
 transition:0.3s;
-overflow:auto;
+overflow:auto
 }
 
-.cart.open{right:0;}
+.cart.open{right:0}
 
 input,textarea{
 width:100%;
 padding:8px;
 margin-top:8px;
 border:1px solid #ccc;
-border-radius:6px;
+border-radius:6px
 }
 
-.success{
-text-align:center;
-margin-top:100px;
-}
+.success{text-align:center;margin-top:100px}
 
 </style>
 
@@ -134,30 +96,18 @@ margin-top:100px;
 <header>Itz Ghanta Gram Store</header>
 
 <div class="searchBox">
-
-<input 
-type="text" 
-id="searchInput" 
-placeholder="Search products..." 
-onkeyup="searchProducts()">
-
+<input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
 </div>
 
 <div class="hero">
-
-<h1>🔥 Limited Time Offer</h1>
-
+<h2>🔥 Limited Time Offer</h2>
 <p>Special deals for Instagram followers</p>
-
 <div class="timer" id="timer"></div>
-
 </div>
 
 <div id="products" class="grid"></div>
 
-<div class="cartBtn" onclick="toggleCart()">
-Cart (<span id="count">0</span>)
-</div>
+<div class="cartBtn" onclick="toggleCart()">Cart (<span id="count">0</span>)</div>
 
 <div class="cart" id="cart">
 
@@ -171,17 +121,15 @@ Cart (<span id="count">0</span>)
 <input id="phone" placeholder="Phone Number">
 <textarea id="address" placeholder="Delivery Address"></textarea>
 
-<button onclick="placeOrder()">Place Order</button>
+<button onclick="payOnline()">Pay Online (UPI)</button>
+
+<button onclick="cashOnDelivery()">Cash on Delivery</button>
 
 </div>
 
 <script>
 
-/* OWNER WHATSAPP */
-
-const ownerPhone="918949803348";
-
-/* PRODUCTS */
+const ownerPhone="918949803348"
 
 const products=[
 
@@ -203,141 +151,165 @@ price:250,
 img:"https://i.ibb.co/C5523qvz/61-YAHjgvfw-L-AC-SL1000.jpg"
 }
 
-];
+]
 
-let cart=[];
+let cart=[]
 
-const grid=document.getElementById("products");
+const grid=document.getElementById("products")
 
 products.forEach((p,i)=>{
 
-let card=document.createElement("div");
+let card=document.createElement("div")
 
-card.className="card";
+card.className="card"
 
 card.innerHTML=
 "<img src='"+p.img+"'>"+
 "<h3>"+p.name+"</h3>"+
 "<div class='price'>₹"+p.price+"</div>"+
-"<button onclick='add("+i+")'>Add to Cart</button>";
+"<button onclick='add("+i+")'>Add to Cart</button>"
 
-grid.appendChild(card);
+grid.appendChild(card)
 
-});
-
-/* SEARCH */
+})
 
 function searchProducts(){
 
-let input=document.getElementById("searchInput").value.toLowerCase();
+let input=document.getElementById("searchInput").value.toLowerCase()
 
-let cards=document.querySelectorAll(".card");
+let cards=document.querySelectorAll(".card")
 
 cards.forEach(card=>{
 
-let title=card.querySelector("h3").innerText.toLowerCase();
+let title=card.querySelector("h3").innerText.toLowerCase()
 
 if(title.includes(input)){
-card.style.display="block";
+card.style.display="block"
 }else{
-card.style.display="none";
+card.style.display="none"
 }
 
-});
+})
 
 }
-
-/* CART */
 
 function add(i){
 
-cart.push(products[i]);
+cart.push(products[i])
 
-document.getElementById("count").innerText=cart.length;
+document.getElementById("count").innerText=cart.length
 
-updateCart();
+updateCart()
 
 }
 
 function updateCart(){
 
-let items=document.getElementById("cartItems");
+let items=document.getElementById("cartItems")
 
-items.innerHTML="";
+items.innerHTML=""
 
 cart.forEach(p=>{
-
-items.innerHTML+="<p>"+p.name+" - ₹"+p.price+"</p>";
-
-});
+items.innerHTML+="<p>"+p.name+" - ₹"+p.price+"</p>"
+})
 
 }
 
 function toggleCart(){
 
-document.getElementById("cart").classList.toggle("open");
+document.getElementById("cart").classList.toggle("open")
 
 }
 
-/* ORDER */
+/* ONLINE PAYMENT */
 
-function placeOrder(){
+function payOnline(){
 
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let address=document.getElementById("address").value;
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let address=document.getElementById("address").value
 
 if(!name||!phone||!address){
-
-alert("Please fill all details");
-
-return;
-
+alert("Please fill all details")
+return
 }
 
-let items=cart.map(p=>p.name+" - ₹"+p.price).join("%0A");
+let items=cart.map(p=>p.name+" - ₹"+p.price).join("%0A")
 
-let total=cart.reduce((sum,p)=>sum+p.price,0);
+let total=cart.reduce((sum,p)=>sum+p.price,0)
+
+let upi="upi://pay?pa=ganchidaksh71@okicici&pn=GhantaGram&am="+total+"&cu=INR"
+
+window.open(upi)
+
+setTimeout(function(){
 
 let msg=
-"New Order%0A%0A"+
+"New Order (Paid)%0A%0A"+
 "Products:%0A"+items+
 "%0A%0ATotal: ₹"+total+
 "%0A%0AName: "+name+
 "%0APhone: "+phone+
-"%0AAddress: "+address;
+"%0AAddress: "+address
 
-window.open("https://wa.me/"+ownerPhone+"?text="+msg);
+window.open("https://wa.me/"+ownerPhone+"?text="+msg)
 
-document.body.innerHTML=
+},4000)
 
-"<div class='success'>"+
-"<h1>✅ Order Placed</h1>"+
-"<p>Our team will contact you shortly.</p>"+
-"</div>";
+document.body.innerHTML="<div class='success'><h1>✅ Order Placed</h1><p>Thank you for shopping</p></div>"
+
+}
+
+/* COD */
+
+function cashOnDelivery(){
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let address=document.getElementById("address").value
+
+if(!name||!phone||!address){
+alert("Please fill all details")
+return
+}
+
+let items=cart.map(p=>p.name+" - ₹"+p.price).join("%0A")
+
+let total=cart.reduce((sum,p)=>sum+p.price,0)
+
+let msg=
+"New Order (COD)%0A%0A"+
+"Products:%0A"+items+
+"%0A%0ATotal: ₹"+total+
+"%0A%0AName: "+name+
+"%0APhone: "+phone+
+"%0AAddress: "+address
+
+window.open("https://wa.me/"+ownerPhone+"?text="+msg)
+
+document.body.innerHTML="<div class='success'><h1>✅ Order Placed</h1><p>Our team will contact you</p></div>"
 
 }
 
 /* TIMER */
 
-let end=Date.now()+4*24*60*60*1000;
+let end=Date.now()+4*24*60*60*1000
 
 setInterval(function(){
 
-let diff=end-Date.now();
+let diff=end-Date.now()
 
-let d=Math.floor(diff/(1000*60*60*24));
-let h=Math.floor(diff/(1000*60*60)%24);
-let m=Math.floor(diff/(1000*60)%60);
-let s=Math.floor(diff/1000%60);
+let d=Math.floor(diff/(1000*60*60*24))
+let h=Math.floor(diff/(1000*60*60)%24)
+let m=Math.floor(diff/(1000*60)%60)
+let s=Math.floor(diff/1000%60)
 
 document.getElementById("timer").innerText=
+"Offer ends in "+d+"d "+h+"h "+m+"m "+s+"s"
 
-"Offer ends in "+d+"d "+h+"h "+m+"m "+s+"s";
-
-},1000);
+},1000)
 
 </script>
 
 </body>
-                                                        </html>
+</html>
