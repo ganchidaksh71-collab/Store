@@ -30,11 +30,7 @@ text-align:center;
 
 .hero h1{
 margin:0;
-font-size:32px;
-}
-
-.hero p{
-margin-top:10px;
+font-size:30px;
 }
 
 .hero button{
@@ -47,7 +43,7 @@ border-radius:6px;
 }
 
 .timer{
-margin-top:15px;
+margin-top:10px;
 font-weight:bold;
 }
 
@@ -122,23 +118,12 @@ border:1px solid #ccc;
 border-radius:6px;
 }
 
-.reviews{
-background:white;
-padding:20px;
-margin:20px;
-border-radius:10px;
-}
-
-.review{
-border-bottom:1px solid #eee;
-padding:10px 0;
-}
-
 footer{
 background:#131921;
 color:white;
 text-align:center;
 padding:20px;
+margin-top:20px;
 }
 
 </style>
@@ -153,29 +138,17 @@ Itz Ghanta Gram Store
 
 <div class="hero">
 
-<h1>🔥 Trending Gadgets Sale</h1>
+<h1>🔥 Limited Time Offer</h1>
 
-<p>Special Offer For Instagram Followers</p>
+<p>Special deals for Instagram followers</p>
 
-<div class="timer" id="timer">Offer ends in: 10:00</div>
+<div class="timer" id="timer"></div>
 
 <button onclick="scrollToProducts()">Shop Now</button>
 
 </div>
 
 <div id="products" class="grid"></div>
-
-<div class="reviews">
-
-<h2>Customer Reviews ⭐⭐⭐⭐⭐</h2>
-
-<div class="review">Rahul: Amazing product! Fast delivery.</div>
-
-<div class="review">Sneha: Quality is very good for the price.</div>
-
-<div class="review">Aman: Ordered again for my friend.</div>
-
-</div>
 
 <div class="cartBtn" onclick="toggleCart()">
 Cart (<span id="count">0</span>)
@@ -195,14 +168,16 @@ Cart (<span id="count">0</span>)
 
 <textarea id="address" placeholder="Delivery Address"></textarea>
 
-<button onclick="checkout()">Proceed to Payment</button>
+<button onclick="checkoutUPI()">Pay Online</button>
+
+<button onclick="checkoutCOD()">Cash on Delivery</button>
 
 </div>
 
 <footer>
 
 © 2026 Itz Ghanta Gram Store  
-Follow on Instagram @itz_ghanta_gram01
+Instagram @itz_ghanta_gram01
 
 </footer>
 
@@ -289,7 +264,21 @@ document.getElementById("products").scrollIntoView({behavior:"smooth"});
 
 }
 
-function checkout(){
+function orderMessage(name,phone,address){
+
+let items=cart.map(p=>p.name+" - ₹"+p.price).join("%0A");
+
+let total=cart.reduce((sum,p)=>sum+p.price,0);
+
+return "New Order%0A%0AProducts:%0A"+items+
+"%0A%0ATotal: ₹"+total+
+"%0A%0AName: "+name+
+"%0APhone: "+phone+
+"%0AAddress: "+address;
+
+}
+
+function checkoutUPI(){
 
 let name=document.getElementById("name").value;
 let phone=document.getElementById("phone").value;
@@ -298,22 +287,11 @@ let address=document.getElementById("address").value;
 if(!name||!phone||!address){
 
 alert("Please fill all details");
-
 return;
 
 }
 
-let items=cart.map(p=>p.name+" - ₹"+p.price).join("%0A");
-
 let total=cart.reduce((sum,p)=>sum+p.price,0);
-
-let msg=
-"New Order%0A%0A"+
-"Products:%0A"+items+
-"%0A%0ATotal: ₹"+total+
-"%0A%0AName: "+name+
-"%0APhone: "+phone+
-"%0AAddress: "+address;
 
 let upiLink="upi://pay?pa="+upi+"&pn=GhantaGram&am="+total+"&cu=INR";
 
@@ -321,27 +299,48 @@ window.open(upiLink);
 
 setTimeout(function(){
 
-window.open("https://wa.me/"+ownerPhone+"?text="+msg);
+window.open("https://wa.me/"+ownerPhone+"?text="+orderMessage(name,phone,address));
 
 },4000);
 
 }
 
-let time=600;
+function checkoutCOD(){
+
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let address=document.getElementById("address").value;
+
+if(!name||!phone||!address){
+
+alert("Please fill all details");
+return;
+
+}
+
+window.open("https://wa.me/"+ownerPhone+"?text="+orderMessage(name,phone,address));
+
+}
+
+/* 4 day timer */
+
+let end=Date.now()+4*24*60*60*1000;
 
 setInterval(function(){
 
-time--;
+let diff=end-Date.now();
 
-let min=Math.floor(time/60);
+let d=Math.floor(diff/(1000*60*60*24));
+let h=Math.floor(diff/(1000*60*60)%24);
+let m=Math.floor(diff/(1000*60)%60);
+let s=Math.floor(diff/1000%60);
 
-let sec=time%60;
-
-document.getElementById("timer").innerText="Offer ends in: "+min+":"+sec;
+document.getElementById("timer").innerText=
+"Offer ends in "+d+"d "+h+"h "+m+"m "+s+"s";
 
 },1000);
 
 </script>
 
 </body>
-  </html>
+</html>
